@@ -195,6 +195,40 @@
     --saturation: 150%;
 }
 
+/* Modern Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+/* Apply modern font to all browser elements */
+#browser,
+#browser * {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Liquid Glass Tab Switch Animations */
+@keyframes scaleTabActive {
+    0% {
+        scale: 1 1;
+    }
+    50% {
+        scale: 1.05 1;
+    }
+    100% {
+        scale: 1 1;
+    }
+}
+
+@keyframes scaleTabInactive {
+    0% {
+        scale: 1 1;
+    }
+    50% {
+        scale: 0.98 1;
+    }
+    100% {
+        scale: 1 1;
+    }
+}
+
 /* SVG Filter for Liquid Glass Effect - Add to page */
 #browser::before {
     content: '';
@@ -231,7 +265,8 @@
     overflow: visible !important;
     transform: translateZ(0) !important;
     will-change: transform !important;
-    transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1) !important;
+    transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1), scale 400ms cubic-bezier(1, 0, 0.4, 1) !important;
+    animation: scaleTabActive 440ms ease !important;
     /* Remove accent colors */
     --accent-color: transparent !important;
     --accent-rgb: 0, 0, 0 !important;
@@ -610,7 +645,8 @@
         inset -0.2px -0.5px 2px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent),
         0px 1px 3px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 6%), transparent) !important;
     border: none !important;
-    transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1) !important;
+    transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1), scale 400ms cubic-bezier(1, 0, 0.4, 1) !important;
+    animation: scaleTabInactive 440ms ease !important;
 }
 
 /* Tab Hover - Enhanced Liquid Glass */
