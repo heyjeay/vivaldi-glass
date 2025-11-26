@@ -182,23 +182,56 @@
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Active Tab - Override Vivaldi's accent colors - REMOVE ALL ACCENT COLORS */
+/* Liquid Glass CSS Variables - Dark Theme */
+:root {
+    --c-glass: #bbbbbc;
+    --c-light: #fff;
+    --c-dark: #000;
+    --c-content: #e1e1e1;
+    --c-action: #03d5ff;
+    --c-bg: #1b1b1d;
+    --glass-reflex-dark: 2;
+    --glass-reflex-light: 0.3;
+    --saturation: 150%;
+}
+
+/* SVG Filter for Liquid Glass Effect - Add to page */
+#browser::before {
+    content: '';
+    position: fixed;
+    width: 0;
+    height: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Active Tab - Liquid Glass Effect */
 .tab.active .tab-header,
 .tab.active .tab-header .tab-background,
 .tab-strip .tab.active,
 .tab-strip .tab.active .tab-header {
-    background-color: rgba(200, 200, 200, 0.03) !important;
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent) !important;
     background-image: none !important;
-    background: rgba(200, 200, 200, 0.03) !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
+    background: color-mix(in srgb, var(--c-glass) 12%, transparent) !important;
+    backdrop-filter: blur(8px) saturate(var(--saturation)) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(var(--saturation)) !important;
     border-radius: 10px !important;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 0 15px rgba(0, 0, 0, 0.2) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent) !important;
+    border: none !important;
     overflow: visible !important;
     transform: translateZ(0) !important;
     will-change: transform !important;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+    transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1) !important;
     /* Remove accent colors */
     --accent-color: transparent !important;
     --accent-rgb: 0, 0, 0 !important;
@@ -227,7 +260,7 @@
     --accent: transparent !important;
 }
 
-/* Active Tab with Audio - USE EXACT SAME STYLING AS REGULAR ACTIVE TAB, NO ACCENT */
+/* Active Tab with Audio - Liquid Glass Effect, NO ACCENT */
 .tab.active.audible .tab-header,
 .tab.active[audible] .tab-header,
 .tab.active.playing .tab-header,
@@ -236,15 +269,25 @@
 .tab.active[audible] .tab-header .tab-background,
 .tab.active.playing .tab-header .tab-background,
 .tab.active[playing] .tab-header .tab-background {
-    /* EXACT SAME AS REGULAR ACTIVE TAB - NO ACCENT COLORS */
-    background-color: rgba(200, 200, 200, 0.03) !important;
+    /* Liquid Glass Effect - NO ACCENT COLORS */
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent) !important;
     background-image: none !important;
-    background: rgba(200, 200, 200, 0.03) !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
+    background: color-mix(in srgb, var(--c-glass) 12%, transparent) !important;
+    backdrop-filter: blur(8px) saturate(var(--saturation)) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(var(--saturation)) !important;
     border-radius: 10px !important;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 0 15px rgba(0, 0, 0, 0.2) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent) !important;
+    border: none !important;
     overflow: visible !important;
     transform: translateZ(0) !important;
     will-change: transform !important;
@@ -504,14 +547,14 @@
     -webkit-backdrop-filter: none !important;
 }
 
-/* But restore the tab header background */
+/* But restore the tab header background with liquid glass */
 .tab.active.audible .tab-header,
 .tab.active[audible] .tab-header,
 .tab.active.audible .tab-header .tab-background,
 .tab.active[audible] .tab-header .tab-background {
-    background-color: rgba(200, 200, 200, 0.03) !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent) !important;
+    backdrop-filter: blur(8px) saturate(var(--saturation)) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(var(--saturation)) !important;
 }
 
 /* Ensure favicon area has NO background whatsoever */
@@ -551,9 +594,34 @@
     font-weight: 600;
 }
 
-/* Tab Hover */
+/* Inactive Tab - Liquid Glass Effect (Lighter) */
+.tab:not(.active) .tab-header,
+.tab:not(.active) .tab-header .tab-background {
+    background-color: color-mix(in srgb, var(--c-glass) 6%, transparent) !important;
+    background-image: none !important;
+    background: color-mix(in srgb, var(--c-glass) 6%, transparent) !important;
+    backdrop-filter: blur(6px) saturate(var(--saturation)) !important;
+    -webkit-backdrop-filter: blur(6px) saturate(var(--saturation)) !important;
+    border-radius: 8px !important;
+    box-shadow: 
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 5%), transparent),
+        inset 1px 2px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+        inset -1px -1px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 50%), transparent),
+        inset -0.2px -0.5px 2px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent),
+        0px 1px 3px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 6%), transparent) !important;
+    border: none !important;
+    transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1) !important;
+}
+
+/* Tab Hover - Enhanced Liquid Glass */
 .tab:not(.active) .tab-header:hover {
-    background-color: rgba(255, 255, 255, 0.05) !important;
+    background-color: color-mix(in srgb, var(--c-glass) 10%, transparent) !important;
+    box-shadow: 
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 8%), transparent),
+        inset 1.5px 2.5px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 70%), transparent),
+        inset -1.5px -1.5px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+        inset -0.3px -0.8px 3px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 2px 6px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent) !important;
 }
 
 /* Prevent glitching on tab state changes - DISABLE TRANSITIONS FOR AUDIBLE TABS */
