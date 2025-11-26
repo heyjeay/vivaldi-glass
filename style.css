@@ -1,0 +1,727 @@
+#browser:not(.tabs-off) .toolbar-mainbar .window-buttongroup.on-mainbar {
+    display: none;
+}
+
+#browser:not(.tabs-off) .toolbar-mainbar {
+    padding-right: unset !important;
+}
+
+/* Glassmorphism Theme */
+#browser {
+    background-color: transparent !important;
+}
+
+/* Header / Tab Bar */
+#header {
+    background-color: rgba(30, 30, 30, 0.6) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Address Bar - Hide background and container */
+.toolbar-addressbar,
+.toolbar-addressbar .toolbar,
+#main .toolbar-addressbar {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+.UrlBar {
+    background-color: rgba(200, 200, 200, 0.15) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+}
+
+/* Address bar container - enable smooth animations */
+.toolbar-addressbar {
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transform-origin: top center !important;
+    will-change: max-height, opacity, transform !important;
+}
+
+/* Ensure all address bar children hide when parent is hidden - Most aggressive: display none */
+.toolbar-addressbar.addressbar-hidden,
+.toolbar-addressbar[style*="display: none"] {
+    display: none !important;
+    max-height: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: translateY(-10px) !important;
+}
+
+/* During animation (not fully hidden yet) */
+.toolbar-addressbar[style*="max-height: 0"]:not(.addressbar-hidden),
+.toolbar-addressbar[style*="opacity: 0"]:not(.addressbar-hidden) {
+    max-height: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+}
+
+/* Also target any wrapper or container elements - display none removes everything */
+.toolbar-addressbar.addressbar-hidden .toolbar-addressbar-wrapper,
+.toolbar-addressbar.addressbar-hidden .addressbar-container,
+#main .toolbar-addressbar.addressbar-hidden,
+#main .toolbar-addressbar[style*="display: none"] {
+    display: none !important;
+    max-height: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Hide all children when address bar is hidden - display none removes everything */
+.toolbar-addressbar.addressbar-hidden *,
+.toolbar-addressbar[style*="display: none"] * {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Specifically target UrlBar when hidden - display none removes it completely */
+.toolbar-addressbar.addressbar-hidden .UrlBar,
+.toolbar-addressbar[style*="display: none"] .UrlBar {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Hide all UrlBar children and pseudo-elements - display none removes everything */
+.toolbar-addressbar.addressbar-hidden .UrlBar *,
+.toolbar-addressbar[style*="display: none"] .UrlBar *,
+.toolbar-addressbar.addressbar-hidden .UrlBar::before,
+.toolbar-addressbar.addressbar-hidden .UrlBar::after,
+.toolbar-addressbar[style*="display: none"] .UrlBar::before,
+.toolbar-addressbar[style*="display: none"] .UrlBar::after {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Hide toolbar children - display none removes everything */
+.toolbar-addressbar.addressbar-hidden .toolbar,
+.toolbar-addressbar[style*="display: none"] .toolbar {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Panels */
+#panels-container {
+    background-color: rgba(30, 30, 30, 0.6) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Active Tab - Override Vivaldi's accent colors */
+.tab.active .tab-header,
+.tab.active .tab-header .tab-background,
+.tab-strip .tab.active,
+.tab-strip .tab.active .tab-header {
+    background-color: rgba(200, 200, 200, 0.03) !important;
+    background-image: none !important;
+    background: rgba(200, 200, 200, 0.03) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 0 15px rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    overflow: visible !important;
+    transform: translateZ(0) !important;
+    will-change: transform !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Active Tab with Audio - USE EXACT SAME STYLING AS REGULAR ACTIVE TAB, NO ACCENT */
+.tab.active.audible .tab-header,
+.tab.active[audible] .tab-header,
+.tab.active.playing .tab-header,
+.tab.active[playing] .tab-header,
+.tab.active.audible .tab-header .tab-background,
+.tab.active[audible] .tab-header .tab-background,
+.tab.active.playing .tab-header .tab-background,
+.tab.active[playing] .tab-header .tab-background {
+    /* EXACT SAME AS REGULAR ACTIVE TAB - NO ACCENT COLORS */
+    background-color: rgba(200, 200, 200, 0.03) !important;
+    background-image: none !important;
+    background: rgba(200, 200, 200, 0.03) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 0 15px rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    overflow: visible !important;
+    transform: translateZ(0) !important;
+    will-change: transform !important;
+    /* NO TRANSITIONS - PREVENT BLINKING */
+    transition: none !important;
+    animation: none !important;
+    color: #ffffff !important;
+}
+
+/* Force ALL child elements to use our styling, no accent colors */
+.tab.active.audible .tab-header *,
+.tab.active[audible] .tab-header *,
+.tab.active.playing .tab-header *,
+.tab.active[playing] .tab-header * {
+    background-color: transparent !important;
+    background: transparent !important;
+    color: inherit !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+}
+
+/* Override any accent color variables - COMPLETE REMOVAL */
+.tab.active.audible,
+.tab.active[audible],
+.tab.active.playing,
+.tab.active[playing],
+.tab.active.audible *,
+.tab.active[audible] *,
+.tab.active.playing *,
+.tab.active[playing] * {
+    --accent-color: transparent !important;
+    --accent-rgb: 0, 0, 0 !important;
+    --accent: transparent !important;
+    --colorAccentBg: transparent !important;
+    --colorAccentFg: transparent !important;
+    --colorAccent: transparent !important;
+    --accentBg: transparent !important;
+    --accentFg: transparent !important;
+}
+
+/* Remove backgrounds that use CSS variables */
+.tab.active.audible .tab-position,
+.tab.active[audible] .tab-position,
+.tab.active.audible .tab-icon,
+.tab.active[audible] .tab-icon,
+.tab.active.audible .tab-favicon,
+.tab.active[audible] .tab-favicon {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    /* Override any var() usage */
+    background: transparent !important;
+}
+
+/* Fix rounded corners - ensure all corners are rounded */
+.tab.active .tab-header *,
+.tab.active .tab-position,
+.tab.active svg {
+    border-radius: inherit !important;
+}
+
+/* Audio indicator - prevent layout shifts and ensure visibility */
+.tab.active .tab-audio,
+.tab.active .tab-audio-indicator,
+.tab.active .audio-indicator,
+.tab.active.audible .tab-audio,
+.tab.active.audible .tab-audio-indicator,
+.tab.active.audible .audio-indicator,
+.tab.active[audible] .tab-audio,
+.tab.active[audible] .tab-audio-indicator,
+.tab.active[audible] .audio-indicator {
+    transform: translateZ(0) !important;
+    transition: opacity 0.2s ease !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Remove ALL backgrounds from favicon and icon elements - COMPLETE REMOVAL */
+.tab.active .tab-icon,
+.tab.active .tab-favicon,
+.tab.active .favicon,
+.tab.active.audible .tab-icon,
+.tab.active.audible .tab-favicon,
+.tab.active.audible .favicon,
+.tab.active[audible] .tab-icon,
+.tab.active[audible] .tab-favicon,
+.tab.active[audible] .favicon,
+.tab.active .tab-header .tab-icon,
+.tab.active .tab-header .tab-favicon,
+.tab.active .tab-header .favicon,
+.tab.active.audible .tab-header .tab-icon,
+.tab.active.audible .tab-header .tab-favicon,
+.tab.active.audible .tab-header .favicon,
+.tab.active[audible] .tab-header .tab-icon,
+.tab.active[audible] .tab-header .tab-favicon,
+.tab.active[audible] .tab-header .favicon,
+.tab.active .tab-header img,
+.tab.active.audible .tab-header img,
+.tab.active[audible] .tab-header img,
+.tab.active .tab-header svg,
+.tab.active.audible .tab-header svg,
+.tab.active[audible] .tab-header svg {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Remove backgrounds from ALL parent containers of favicon */
+.tab.active.audible .tab-header > *,
+.tab.active[audible] .tab-header > *,
+.tab.active.audible .tab-header > * > *,
+.tab.active[audible] .tab-header > * > *,
+.tab.active.audible .tab-position,
+.tab.active[audible] .tab-position,
+.tab.active.audible .tab-position > *,
+.tab.active[audible] .tab-position > * {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Remove any circular backgrounds or borders on icon containers - ALL POSSIBLE SELECTORS */
+.tab.active .tab-icon-wrapper,
+.tab.active .icon-wrapper,
+.tab.active.audible .tab-icon-wrapper,
+.tab.active.audible .icon-wrapper,
+.tab.active[audible] .tab-icon-wrapper,
+.tab.active[audible] .icon-wrapper,
+.tab.active .tab-header [class*="icon"],
+.tab.active.audible .tab-header [class*="icon"],
+.tab.active[audible] .tab-header [class*="icon"],
+.tab.active .tab-header [class*="Icon"],
+.tab.active.audible .tab-header [class*="Icon"],
+.tab.active[audible] .tab-header [class*="Icon"],
+.tab.active .tab-header [class*="favicon"],
+.tab.active.audible .tab-header [class*="favicon"],
+.tab.active[audible] .tab-header [class*="favicon"],
+.tab.active .tab-header [class*="Favicon"],
+.tab.active.audible .tab-header [class*="Favicon"],
+.tab.active[audible] .tab-header [class*="Favicon"],
+.tab.active.audible .tab-header div,
+.tab.active[audible] .tab-header div,
+.tab.active.audible .tab-header span,
+.tab.active[audible] .tab-header span {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Remove circle from audio indicator itself */
+.tab.active .tab-audio,
+.tab.active .tab-audio-indicator,
+.tab.active .audio-indicator,
+.tab.active.audible .tab-audio,
+.tab.active.audible .tab-audio-indicator,
+.tab.active.audible .audio-indicator,
+.tab.active[audible] .tab-audio,
+.tab.active[audible] .tab-audio-indicator,
+.tab.active[audible] .audio-indicator {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Remove any pseudo-elements that might create circles */
+.tab.active .tab-icon::before,
+.tab.active .tab-icon::after,
+.tab.active .tab-favicon::before,
+.tab.active .tab-favicon::after,
+.tab.active.audible .tab-icon::before,
+.tab.active.audible .tab-icon::after,
+.tab.active.audible .tab-favicon::before,
+.tab.active.audible .tab-favicon::after,
+.tab.active[audible] .tab-icon::before,
+.tab.active[audible] .tab-icon::after,
+.tab.active[audible] .tab-favicon::before,
+.tab.active[audible] .tab-favicon::after {
+    display: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Remove any circular backgrounds from tab header elements when audio is playing - NUCLEAR OPTION */
+.tab.active.audible .tab-header *,
+.tab.active[audible] .tab-header *,
+.tab.active.audible .tab-header *::before,
+.tab.active.audible .tab-header *::after,
+.tab.active[audible] .tab-header *::before,
+.tab.active[audible] .tab-header *::after {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Specifically target the first child elements that might have backgrounds */
+.tab.active.audible .tab-header > :first-child,
+.tab.active[audible] .tab-header > :first-child,
+.tab.active.audible .tab-position > :first-child,
+.tab.active[audible] .tab-position > :first-child {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Specifically target any elements with circular backgrounds */
+.tab.active.audible [style*="border-radius: 50%"],
+.tab.active[audible] [style*="border-radius: 50%"],
+.tab.active.audible [style*="border-radius:50%"],
+.tab.active[audible] [style*="border-radius:50%"] {
+    border-radius: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* NUCLEAR OPTION: Remove ALL backgrounds from EVERYTHING in audible tabs */
+.tab.active.audible *,
+.tab.active[audible] * {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* But restore the tab header background */
+.tab.active.audible .tab-header,
+.tab.active[audible] .tab-header,
+.tab.active.audible .tab-header .tab-background,
+.tab.active[audible] .tab-header .tab-background {
+    background-color: rgba(200, 200, 200, 0.03) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+/* Ensure favicon area has NO background whatsoever */
+.tab.active.audible .tab-header .tab-icon,
+.tab.active.audible .tab-header .tab-favicon,
+.tab.active.audible .tab-header img,
+.tab.active.audible .tab-header svg,
+.tab.active[audible] .tab-header .tab-icon,
+.tab.active[audible] .tab-header .tab-favicon,
+.tab.active[audible] .tab-header img,
+.tab.active[audible] .tab-header svg,
+.tab.active.audible .tab-position .tab-icon,
+.tab.active.audible .tab-position .tab-favicon,
+.tab.active.audible .tab-position img,
+.tab.active.audible .tab-position svg,
+.tab.active[audible] .tab-position .tab-icon,
+.tab.active[audible] .tab-position .tab-favicon,
+.tab.active[audible] .tab-position img,
+.tab.active[audible] .tab-position svg {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Active Tab Text */
+.tab.active .title {
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+}
+
+/* Tab Hover */
+.tab:not(.active) .tab-header:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Prevent glitching on tab state changes - DISABLE TRANSITIONS FOR AUDIBLE TABS */
+.tab .tab-header,
+.tab .tab-header .tab-background {
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, border 0.2s ease !important;
+    transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+}
+
+/* FORCE ACTIVE AUDIBLE TABS TO USE NO TRANSITIONS */
+.tab.active.audible .tab-header,
+.tab.active[audible] .tab-header,
+.tab.active.playing .tab-header,
+.tab.active[playing] .tab-header,
+.tab.active.audible .tab-header .tab-background,
+.tab.active[audible] .tab-header .tab-background,
+.tab.active.playing .tab-header .tab-background,
+.tab.active[playing] .tab-header .tab-background {
+    transition: none !important;
+}
+
+/* COMPLETELY DISABLE ALL TRANSITIONS AND ANIMATIONS FOR ACTIVE AUDIBLE TABS */
+.tab.active.audible,
+.tab.active[audible],
+.tab.active.playing,
+.tab.active[playing],
+.tab.active.audible *,
+.tab.active[audible] *,
+.tab.active.playing *,
+.tab.active[playing] *,
+.tab.active.audible .tab-header,
+.tab.active[audible] .tab-header,
+.tab.active.playing .tab-header,
+.tab.active[playing] .tab-header,
+.tab.active.audible .tab-header *,
+.tab.active[audible] .tab-header *,
+.tab.active.playing .tab-header *,
+.tab.active[playing] .tab-header * {
+    transition: none !important;
+    animation: none !important;
+    -webkit-animation: none !important;
+    animation-name: none !important;
+    -webkit-animation-name: none !important;
+    animation-duration: 0s !important;
+    -webkit-animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    -webkit-animation-delay: 0s !important;
+}
+
+/* Disable any keyframe animations */
+@keyframes none {
+    0%, 100% { opacity: 1; }
+}
+
+.tab.active.audible,
+.tab.active[audible] {
+    animation: none !important;
+    -webkit-animation: none !important;
+}
+
+/* Override Vivaldi's accent color system completely - NUCLEAR OPTION */
+.tab.active.audible,
+.tab.active[audible],
+.tab.active.playing,
+.tab.active[playing] {
+    --accent-color: transparent !important;
+    --accent-rgb: 0, 0, 0 !important;
+    --accent: transparent !important;
+}
+
+/* Remove accent color from favicon/icon area specifically - NUCLEAR OPTION */
+.tab.active.audible .tab-icon,
+.tab.active.audible .tab-favicon,
+.tab.active.audible .tab-position,
+.tab.active.audible .tab-header .tab-icon,
+.tab.active.audible .tab-header .tab-favicon,
+.tab.active.audible .tab-header .tab-position,
+.tab.active[audible] .tab-icon,
+.tab.active[audible] .tab-favicon,
+.tab.active[audible] .tab-position,
+.tab.active[audible] .tab-header .tab-icon,
+.tab.active[audible] .tab-header .tab-favicon,
+.tab.active[audible] .tab-header .tab-position,
+.tab.active.audible .tab-position *,
+.tab.active[audible] .tab-position *,
+.tab.active.audible .tab-header .tab-position *,
+.tab.active[audible] .tab-header .tab-position * {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+    border-color: transparent !important;
+    border: none !important;
+    color: inherit !important;
+    box-shadow: none !important;
+    outline: none !important;
+    transition: none !important;
+    animation: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Remove accent color from tab-position and all its children */
+.tab.active.audible .tab-position,
+.tab.active[audible] .tab-position {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+.tab.active.audible .tab-position *,
+.tab.active[audible] .tab-position *,
+.tab.active.audible .tab-position *::before,
+.tab.active.audible .tab-position *::after,
+.tab.active[audible] .tab-position *::before,
+.tab.active[audible] .tab-position *::after {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Target any element that might have accent color applied */
+.tab.active.audible [style*="accent"],
+.tab.active[audible] [style*="accent"],
+.tab.active.audible [style*="rgb"],
+.tab.active[audible] [style*="rgb"],
+.tab.active.audible [style*="hsl"],
+.tab.active[audible] [style*="hsl"],
+.tab.active.audible [style*="background"],
+.tab.active[audible] [style*="background"] {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+    border-color: transparent !important;
+    border: none !important;
+    color: inherit !important;
+    box-shadow: none !important;
+}
+
+/* Remove accent color from tab-position specifically - most aggressive */
+.tab.active .tab-position,
+.tab.active.audible .tab-position,
+.tab.active[audible] .tab-position {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.tab.active .tab-position *,
+.tab.active.audible .tab-position *,
+.tab.active[audible] .tab-position * {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Status Bar */
+#footer {
+    background-color: rgba(30, 30, 30, 0.6) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transform-origin: bottom center !important;
+    will-change: max-height, opacity, transform !important;
+}
+
+/* Status bar hidden state */
+#footer.statusbar-hidden,
+#footer[style*="display: none"] {
+    display: none !important;
+    max-height: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: translateY(10px) !important;
+}
+
+/* Hide all status bar children when hidden */
+#footer.statusbar-hidden *,
+#footer[style*="display: none"] * {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Transparent Backgrounds for inner elements */
+.toolbar,
+.inner-header,
+.vivaldi {
+    background: transparent !important;
+}
