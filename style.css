@@ -44,6 +44,12 @@
                 transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     transform-origin: top center !important;
     will-change: max-height, opacity, transform !important;
+    overflow: visible !important; /* Allow dropdowns to show */
+}
+
+/* Ensure address bar doesn't clip dropdowns when visible */
+.toolbar-addressbar:not(.addressbar-hidden) {
+    overflow: visible !important;
 }
 
 /* Ensure all address bar children hide when parent is hidden - Most aggressive: display none */
@@ -73,6 +79,21 @@
     opacity: 0 !important;
     pointer-events: none !important;
     overflow: hidden !important;
+}
+
+/* Ensure address bar and its containers allow dropdowns to show */
+.toolbar-addressbar:not(.addressbar-hidden),
+.toolbar-addressbar:not([style*="display: none"]) {
+    overflow: visible !important;
+}
+
+/* Don't interfere with search suggestions/dropdowns - let Vivaldi handle them */
+.toolbar-addressbar .suggestions,
+.toolbar-addressbar .dropdown,
+.toolbar-addressbar [role="listbox"],
+.toolbar-addressbar .autocomplete {
+    /* Don't override positioning - let Vivaldi handle it */
+    overflow: visible !important;
 }
 
 /* Also target any wrapper or container elements - display none removes everything */
