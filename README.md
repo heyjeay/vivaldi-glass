@@ -12,12 +12,40 @@ A beautiful dark-themed liquid glass morphism UI for Vivaldi browser with smooth
 - 🚫 Vivaldi theme system disabled (no conflicts)
 - 📱 Auto-hiding address bar and status bar
 
+## Quick Reference: Vivaldi Installation Directories
+
+**Windows:**
+- `%LOCALAPPDATA%\Vivaldi\Application\[VERSION]\resources\vivaldi\`
+- Or: `C:\Users\YourUsername\AppData\Local\Vivaldi\Application\[VERSION]\resources\vivaldi\`
+
+**macOS:**
+- `/Applications/Vivaldi.app/Contents/Resources/vivaldi/`
+- Or (Homebrew): `/opt/homebrew/Caskroom/vivaldi/[VERSION]/Vivaldi.app/Contents/Resources/vivaldi/`
+
+**Linux:**
+- `/opt/vivaldi/resources/vivaldi/`
+- Or: `/usr/lib/vivaldi/resources/vivaldi/`
+- Or: `~/.local/share/vivaldi/resources/vivaldi/`
+
+*To find your Vivaldi version, type `vivaldi://about` in the address bar.*
+
 ## Installation
 
-### Step 1: Enable Transparency in Vivaldi
+### Step 1: Enable Custom CSS in Vivaldi Config
+
+**Important:** This must be done first before any other steps!
 
 1. Open Vivaldi browser
-2. Go to **Settings** (or press `F2`)
+2. Go to **Settings**
+3. Navigate to **Appearance** → **Themes**
+4. Scroll down to find **"Allow CSS modifications"** or **"Enable CSS modifications"**
+5. **Enable this option** (toggle it on)
+6. This allows Vivaldi to load and apply custom CSS files
+
+### Step 2: Enable Transparency in Vivaldi
+
+1. Open Vivaldi browser
+2. Go to **Settings**
 3. Navigate to **Appearance** → **Themes**
 4. Click **"Edit"** on your current theme (or create a new theme)
 5. In the theme editor, enable **"Transparent Tab Bar"**
@@ -31,7 +59,11 @@ A beautiful dark-themed liquid glass morphism UI for Vivaldi browser with smooth
 
 ### Step 3: Install the CSS File
 
-1. Copy the `style.css` file to a permanent location (recommended: `C:\Users\YourUsername\Documents\Vivaldi-glass\style.css`)
+1. Copy the `style.css` file to a permanent location:
+   - **Windows**: `C:\Users\YourUsername\Documents\Vivaldi-glass\style.css`
+   - **macOS**: `~/Documents/Vivaldi-glass/style.css`
+   - **Linux**: `~/Documents/Vivaldi-glass/style.css` or `~/vivaldi-glass/style.css`
+
 2. In Vivaldi Settings → Appearance → Themes → Custom CSS:
    - Click **"Add CSS File"** or **"Browse"**
    - Navigate to and select `style.css`
@@ -39,22 +71,46 @@ A beautiful dark-themed liquid glass morphism UI for Vivaldi browser with smooth
 
 ### Step 4: Install the JavaScript File
 
-1. Navigate to your Vivaldi installation directory:
+1. Navigate to your Vivaldi installation directory (replace `[VERSION]` with your current Vivaldi version number):
+
+   **Windows:**
    ```
    C:\Users\YourUsername\AppData\Local\Vivaldi\Application\[VERSION]\resources\vivaldi\
    ```
-   (Replace `[VERSION]` with your current Vivaldi version number)
+   *Tip: Press `Win + R`, type `%LOCALAPPDATA%\Vivaldi\Application`, and press Enter*
+
+   **macOS:**
+   ```
+   /Applications/Vivaldi.app/Contents/Resources/vivaldi/
+   ```
+   *Or if installed via Homebrew:*
+   ```
+   /opt/homebrew/Caskroom/vivaldi/[VERSION]/Vivaldi.app/Contents/Resources/vivaldi/
+   ```
+
+   **Linux:**
+   ```
+   /opt/vivaldi/resources/vivaldi/
+   ```
+   *Or if installed via package manager, it may be:*
+   ```
+   /usr/lib/vivaldi/resources/vivaldi/
+   ```
+   *Or:*
+   ```
+   ~/.local/share/vivaldi/resources/vivaldi/
+   ```
 
 2. Copy `custom.js` to this directory:
-   ```
-   C:\Users\YourUsername\AppData\Local\Vivaldi\Application\[VERSION]\resources\vivaldi\custom.js
-   ```
+   - The file should be at: `[VIVALDI_DIR]/resources/vivaldi/custom.js`
 
 3. Edit `window.html` in the same directory and ensure it includes:
    ```html
    <script src="custom.js"></script>
    ```
    (This should already be in the file if you've been following along)
+
+**Note for macOS/Linux users:** You may need administrator/sudo permissions to edit files in the Vivaldi installation directory. On macOS, you might need to right-click Vivaldi.app → Show Package Contents to access the Resources folder.
 
 ### Step 5: Restart Vivaldi
 
@@ -98,10 +154,12 @@ font-family: "YourFont", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
 
 ### JavaScript Not Working
 
-1. **Check file location**: `custom.js` must be in `resources\vivaldi\` directory
+1. **Check file location**: `custom.js` must be in `resources/vivaldi/` directory (use `/` for Mac/Linux, `\` for Windows)
 2. **Check window.html**: Ensure `<script src="custom.js"></script>` is present
-3. **Check console**: Press `F12` → Console tab for JavaScript errors
-4. **File permissions**: Ensure Vivaldi has read access to the file
+3. **Check console**: Press `F12` (or `Cmd+Option+I` on Mac) → Console tab for JavaScript errors
+4. **File permissions**: 
+   - **Windows**: Ensure Vivaldi has read access to the file
+   - **macOS/Linux**: You may need to use `sudo` or change file permissions with `chmod`
 
 ## Features Explained
 
@@ -130,14 +188,17 @@ font-family: "YourFont", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
 - **Vivaldi Updates**: After Vivaldi updates, you may need to re-copy `custom.js` to the new version directory
 - **Backup**: Keep backups of your custom files
 - **Performance**: The theme uses hardware acceleration for smooth performance
+- **macOS/Linux Permissions**: You may need administrator permissions to edit files in the Vivaldi installation directory
+- **Finding Vivaldi Version**: Check `vivaldi://about` in the address bar to see your Vivaldi version number
 
 ## Support
 
 If you encounter issues:
-1. Check the browser console (F12) for errors
-2. Verify all file paths are correct
-3. Ensure Vivaldi has proper file permissions
+1. Check the browser console (`F12` on Windows/Linux, `Cmd+Option+I` on Mac) for errors
+2. Verify all file paths are correct for your operating system
+3. Ensure Vivaldi has proper file permissions (may need `sudo` on macOS/Linux)
 4. Try disabling other custom CSS or extensions
+5. Check that "Transparent Tab Bar" is enabled in theme settings
 
 **For Support Join my Discord:** [https://discord.gg/xm3HKSDDJq](https://discord.gg/xm3HKSDDJq)
 
