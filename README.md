@@ -31,16 +31,17 @@ A beautiful dark-themed liquid glass morphism UI for Vivaldi browser with smooth
 
 ## Installation
 
-### Step 1: Enable Custom CSS in Vivaldi Config
+### Step 1: Enable Custom CSS in Vivaldi Flags
 
 **Important:** This must be done first before any other steps!
 
 1. Open Vivaldi browser
-2. Go to **Settings**
-3. Navigate to **Appearance** → **Themes**
-4. Scroll down to find **"Allow CSS modifications"** or **"Enable CSS modifications"**
-5. **Enable this option** (toggle it on)
-6. This allows Vivaldi to load and apply custom CSS files
+2. In the address bar, type: `vivaldi://flags`
+3. Press Enter to open the Vivaldi flags page
+4. Search for **"Allow CSS modifications"** or **"CSS modifications"**
+5. **Enable this flag** (set it to "Enabled")
+6. Restart Vivaldi when prompted
+7. This allows Vivaldi to load and apply custom CSS files
 
 ### Step 2: Enable Transparency in Vivaldi
 
@@ -51,20 +52,14 @@ A beautiful dark-themed liquid glass morphism UI for Vivaldi browser with smooth
 5. In the theme editor, enable **"Transparent Tab Bar"**
 6. Save the theme
 
-### Step 2: Enable Custom CSS in Vivaldi
-
-1. In **Settings** → **Appearance** → **Themes**
-2. Scroll down to find **Custom CSS** section
-3. Click **"Add Custom CSS"** or enable **"Allow CSS modifications"**
-
-### Step 3: Install the CSS File
+### Step 3: Add the CSS File
 
 1. Copy the `style.css` file to a permanent location:
    - **Windows**: `C:\Users\YourUsername\Documents\Vivaldi-glass\style.css`
    - **macOS**: `~/Documents/Vivaldi-glass/style.css`
    - **Linux**: `~/Documents/Vivaldi-glass/style.css` or `~/vivaldi-glass/style.css`
 
-2. In Vivaldi Settings → Appearance → Themes → Custom CSS:
+2. In **Settings** → **Appearance** → **Themes** → **Custom CSS**:
    - Click **"Add CSS File"** or **"Browse"**
    - Navigate to and select `style.css`
    - The file path should appear in the custom CSS list
