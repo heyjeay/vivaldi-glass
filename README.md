@@ -1,3 +1,6 @@
+
+![vivaldi_rQJHNm6T6h](https://github.com/user-attachments/assets/afcb54cb-3244-4248-960c-3e3877ab60f1)
+
 # Vivaldi Liquid Glass Theme
 
 A beautiful dark-themed liquid glass morphism UI for Vivaldi browser with smooth animations and modern design.
