@@ -30,13 +30,6 @@ A beautiful dark-themed liquid glass morphism UI for Vivaldi browser with smooth
    - Navigate to and select `style.css`
    - The file path should appear in the custom CSS list
 
-**Alternative Method (Direct Path):**
-- In the Custom CSS field, enter:
-  ```
-  @import url("file:///C:/Users/YourUsername/Documents/Vivaldi-glass/style.css");
-  ```
-  (Replace `YourUsername` with your actual Windows username)
-
 ### Step 3: Install the JavaScript File
 
 1. Navigate to your Vivaldi installation directory:
@@ -73,22 +66,6 @@ Vivaldi-glass/
 
 ## Customization
 
-### Change Theme Colors
-
-Edit the CSS variables in `style.css` (around line 209):
-
-```css
-:root {
-    --c-glass: #bbbbbc;        /* Glass color */
-    --c-content: #e1e1e1;      /* Text color */
-    --c-action: #03d5ff;        /* Accent color (cyan) */
-    --c-bg: #1b1b1d;            /* Background color */
-    --glass-reflex-dark: 2;     /* Dark reflection intensity */
-    --glass-reflex-light: 0.3;  /* Light reflection intensity */
-    --saturation: 150%;        /* Color saturation */
-}
-```
-
 ### Change Font
 
 Replace the font import (around line 240):
@@ -118,12 +95,6 @@ font-family: "YourFont", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
 2. **Check window.html**: Ensure `<script src="custom.js"></script>` is present
 3. **Check console**: Press `F12` → Console tab for JavaScript errors
 4. **File permissions**: Ensure Vivaldi has read access to the file
-
-### Tabs Still Glitching
-
-1. **Disable other extensions**: Some extensions may conflict
-2. **Check Vivaldi version**: Theme tested on Vivaldi 7.8+
-3. **Update files**: Ensure you have the latest `style.css` and `custom.js`
 
 ## Features Explained
 
@@ -160,6 +131,8 @@ If you encounter issues:
 2. Verify all file paths are correct
 3. Ensure Vivaldi has proper file permissions
 4. Try disabling other custom CSS or extensions
+
+**For Support Join my Discord:** [https://discord.gg/xm3HKSDDJq](https://discord.gg/xm3HKSDDJq)
 
 ## License
 
