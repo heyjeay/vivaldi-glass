@@ -161,7 +161,7 @@
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Active Tab - Override Vivaldi's accent colors */
+/* Active Tab - Override Vivaldi's accent colors - REMOVE ALL ACCENT COLORS */
 .tab.active .tab-header,
 .tab.active .tab-header .tab-background,
 .tab-strip .tab.active,
@@ -178,6 +178,32 @@
     transform: translateZ(0) !important;
     will-change: transform !important;
     transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+    /* Remove accent colors */
+    --accent-color: transparent !important;
+    --accent-rgb: 0, 0, 0 !important;
+    --accent: transparent !important;
+    --colorAccentBg: transparent !important;
+    --colorAccentFg: transparent !important;
+}
+
+/* Remove accent colors from ALL active tab elements */
+.tab.active .tab-position,
+.tab.active .tab-position *,
+.tab.active .tab-icon,
+.tab.active .tab-favicon,
+.tab.active .tab-header .tab-position,
+.tab.active .tab-header .tab-position *,
+.tab.active .tab-header .tab-icon,
+.tab.active .tab-header .tab-favicon {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    --accent-color: transparent !important;
+    --accent-rgb: 0, 0, 0 !important;
+    --accent: transparent !important;
 }
 
 /* Active Tab with Audio - USE EXACT SAME STYLING AS REGULAR ACTIVE TAB, NO ACCENT */
@@ -649,7 +675,7 @@
     box-shadow: none !important;
 }
 
-/* Remove accent color from tab-position specifically - most aggressive */
+/* Remove accent color from tab-position specifically - most aggressive - ALL ACTIVE TABS */
 .tab.active .tab-position,
 .tab.active.audible .tab-position,
 .tab.active[audible] .tab-position {
@@ -659,17 +685,43 @@
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
+    /* Force override any CSS variables */
+    background: transparent !important;
+    background-color: transparent !important;
 }
 
 .tab.active .tab-position *,
 .tab.active.audible .tab-position *,
-.tab.active[audible] .tab-position * {
+.tab.active[audible] .tab-position *,
+.tab.active .tab-position *::before,
+.tab.active .tab-position *::after {
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* NUCLEAR: Remove ALL backgrounds from active tab favicon area */
+.tab.active .tab-position,
+.tab.active .tab-icon,
+.tab.active .tab-favicon,
+.tab.active .tab-header .tab-position,
+.tab.active .tab-header .tab-icon,
+.tab.active .tab-header .tab-favicon,
+.tab.active .tab-header img,
+.tab.active .tab-header svg {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 /* Status Bar */
