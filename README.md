@@ -14,15 +14,22 @@ A beautiful dark-themed liquid glass morphism UI for Vivaldi browser with smooth
 
 ## Installation
 
-### Step 1: Enable Custom CSS in Vivaldi
+### Step 1: Enable Transparency in Vivaldi
 
 1. Open Vivaldi browser
 2. Go to **Settings** (or press `F2`)
 3. Navigate to **Appearance** → **Themes**
-4. Scroll down to find **Custom CSS** section
-5. Click **"Add Custom CSS"** or enable **"Allow CSS modifications"**
+4. Click **"Edit"** on your current theme (or create a new theme)
+5. In the theme editor, enable **"Transparent Tab Bar"**
+6. Save the theme
 
-### Step 2: Install the CSS File
+### Step 2: Enable Custom CSS in Vivaldi
+
+1. In **Settings** → **Appearance** → **Themes**
+2. Scroll down to find **Custom CSS** section
+3. Click **"Add Custom CSS"** or enable **"Allow CSS modifications"**
+
+### Step 3: Install the CSS File
 
 1. Copy the `style.css` file to a permanent location (recommended: `C:\Users\YourUsername\Documents\Vivaldi-glass\style.css`)
 2. In Vivaldi Settings → Appearance → Themes → Custom CSS:
@@ -30,7 +37,7 @@ A beautiful dark-themed liquid glass morphism UI for Vivaldi browser with smooth
    - Navigate to and select `style.css`
    - The file path should appear in the custom CSS list
 
-### Step 3: Install the JavaScript File
+### Step 4: Install the JavaScript File
 
 1. Navigate to your Vivaldi installation directory:
    ```
@@ -49,7 +56,7 @@ A beautiful dark-themed liquid glass morphism UI for Vivaldi browser with smooth
    ```
    (This should already be in the file if you've been following along)
 
-### Step 4: Restart Vivaldi
+### Step 5: Restart Vivaldi
 
 1. Close all Vivaldi windows completely
 2. Reopen Vivaldi
