@@ -182,8 +182,31 @@
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Liquid Glass CSS Variables - Dark Theme */
+/* Disable Vivaldi Theme System - Override all theme variables */
 :root {
+    /* Disable Vivaldi's theme colors */
+    --colorAccentBg: transparent !important;
+    --colorAccentFg: transparent !important;
+    --colorAccent: transparent !important;
+    --accent-color: transparent !important;
+    --accent-rgb: 0, 0, 0 !important;
+    --accent: transparent !important;
+    --accentBg: transparent !important;
+    --accentFg: transparent !important;
+    --colorHighlightBg: transparent !important;
+    --colorHighlightFg: transparent !important;
+    --colorBg: transparent !important;
+    --colorFg: transparent !important;
+    --colorBgAlpha: transparent !important;
+    --colorFgAlpha: transparent !important;
+    
+    /* Disable Vivaldi tab theme colors */
+    --colorTabBg: transparent !important;
+    --colorTabBgActive: transparent !important;
+    --colorTabFg: transparent !important;
+    --colorTabFgActive: transparent !important;
+    
+    /* Liquid Glass CSS Variables - Dark Theme */
     --c-glass: #bbbbbc;
     --c-light: #fff;
     --c-dark: #000;
@@ -195,8 +218,29 @@
     --saturation: 150%;
 }
 
+/* Disable Vivaldi Theme System on Tabs - Override theme variables */
+.tab,
+.tab * {
+    /* Disable all Vivaldi theme color variables */
+    --colorAccentBg: transparent !important;
+    --colorAccentFg: transparent !important;
+    --colorAccent: transparent !important;
+    --accent-color: transparent !important;
+    --accent-rgb: 0, 0, 0 !important;
+    --accent: transparent !important;
+    --accentBg: transparent !important;
+    --accentFg: transparent !important;
+    --colorTabBg: transparent !important;
+    --colorTabBgActive: transparent !important;
+    --colorTabFg: transparent !important;
+    --colorTabFgActive: transparent !important;
+}
+
 /* Modern Google Font */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+/* Font Awesome for static audio icon */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");
 
 /* Apply modern font to all browser elements */
 #browser,
@@ -229,6 +273,14 @@
     }
 }
 
+/* Override animations for audible tabs - force no animation */
+@keyframes none {
+    0%, 100% {
+        transform: none;
+        scale: 1 1;
+    }
+}
+
 /* SVG Filter for Liquid Glass Effect - Add to page */
 #browser::before {
     content: '';
@@ -239,11 +291,119 @@
     pointer-events: none;
 }
 
-/* Active Tab - Liquid Glass Effect */
-.tab.active .tab-header,
-.tab.active .tab-header .tab-background,
-.tab-strip .tab.active,
-.tab-strip .tab.active .tab-header {
+/* Remove grey backgrounds from tab containers and strip */
+.tab-strip {
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Remove default backgrounds from tab-background */
+.tab-background,
+.tab.active .tab-background,
+.tab:not(.active) .tab-background {
+    background-color: transparent !important;
+    background-image: none !important;
+    background: transparent !important;
+}
+
+/* Remove backgrounds from any tab wrapper or container elements */
+.tab-wrapper,
+.tab-container,
+.tab-strip .tab,
+.tab-strip .tab *:not(.tab-header):not(.tab-background) {
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* COMPREHENSIVE: Block ALL Vivaldi default styles on active tabs - prevent clashes */
+.tab.active,
+.tab.active * {
+    /* Block all Vivaldi color variables */
+    --colorAccentBg: transparent !important;
+    --colorAccentFg: transparent !important;
+    --colorAccent: transparent !important;
+    --accent-color: transparent !important;
+    --accent-rgb: 0, 0, 0 !important;
+    --accent: transparent !important;
+    --colorTabBg: transparent !important;
+    --colorTabBgActive: transparent !important;
+    --colorTabFg: transparent !important;
+    --colorTabFgActive: transparent !important;
+    --colorHighlightBg: transparent !important;
+    --colorHighlightFg: transparent !important;
+}
+
+/* Force remove any grey/solid backgrounds from active tab children (but not header/background) - NO STROKE */
+.tab.active .tab-position,
+.tab.active .tab-position *,
+.tab.active .tab-icon,
+.tab.active .tab-favicon,
+.tab.active .title {
+    background-color: transparent !important;
+    background-image: none !important;
+    background: transparent !important;
+    stroke: none !important;
+    stroke-width: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    /* Block any gradients */
+    background-image: none !important;
+    -webkit-background-image: none !important;
+    -moz-background-image: none !important;
+    /* Block any filters except our backdrop-filter */
+    filter: none !important;
+    -webkit-filter: none !important;
+    -moz-filter: none !important;
+}
+
+/* Remove stroke from ALL SVG and image elements in active tabs */
+.tab.active svg,
+.tab.active img,
+.tab.active .tab-header svg,
+.tab.active .tab-header img,
+.tab.active .tab-position svg,
+.tab.active .tab-position img,
+.tab.active .tab-icon svg,
+.tab.active .tab-icon img,
+.tab.active .tab-favicon svg,
+.tab.active .tab-favicon img {
+    stroke: none !important;
+    stroke-width: 0 !important;
+    border: none !important;
+    outline: none !important;
+}
+
+/* Block ALL Vivaldi default styles on active tab header - preserve our liquid glass */
+.tab.active .tab-header {
+    position: relative !important; /* For Font Awesome icon positioning */
+    /* Block all Vivaldi color variables */
+    --colorAccentBg: transparent !important;
+    --colorAccentFg: transparent !important;
+    --colorAccent: transparent !important;
+    --accent-color: transparent !important;
+    --accent-rgb: 0, 0, 0 !important;
+    --accent: transparent !important;
+    --colorTabBg: transparent !important;
+    --colorTabBgActive: transparent !important;
+    --colorTabFg: transparent !important;
+    --colorTabFgActive: transparent !important;
+    /* Block gradients and patterns */
+    background-image: none !important;
+    -webkit-background-image: none !important;
+    -moz-background-image: none !important;
+    /* Block any filters except our backdrop-filter */
+    filter: none !important;
+    -webkit-filter: none !important;
+    -moz-filter: none !important;
+}
+
+/* Active Tab - Liquid Glass Effect - Only animate if NOT audible */
+.tab.active:not(.audible):not([audible]):not(.playing):not([playing]) .tab-header,
+.tab.active:not(.audible):not([audible]):not(.playing):not([playing]) .tab-header .tab-background,
+.tab-strip .tab.active:not(.audible):not([audible]):not(.playing):not([playing]),
+.tab-strip .tab.active:not(.audible):not([audible]):not(.playing):not([playing]) .tab-header,
+.tab.active:not(.audible):not([audible]):not(.playing):not([playing]) .tab-background {
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent) !important;
     background-image: none !important;
     background: color-mix(in srgb, var(--c-glass) 12%, transparent) !important;
@@ -267,6 +427,61 @@
     will-change: transform !important;
     transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1), scale 400ms cubic-bezier(1, 0, 0.4, 1) !important;
     animation: scaleTabActive 440ms ease !important;
+}
+
+/* Active Tab - Liquid Glass Effect - NO ANIMATION for audible tabs */
+.tab.active.audible .tab-header,
+.tab.active[audible] .tab-header,
+.tab.active.playing .tab-header,
+.tab.active[playing] .tab-header,
+.tab.active.audible .tab-header .tab-background,
+.tab.active[audible] .tab-header .tab-background,
+.tab.active.playing .tab-header .tab-background,
+.tab.active[playing] .tab-header .tab-background,
+.tab-strip .tab.active.audible,
+.tab-strip .tab.active[audible],
+.tab-strip .tab.active.playing,
+.tab-strip .tab.active[playing],
+.tab-strip .tab.active.audible .tab-header,
+.tab-strip .tab.active[audible] .tab-header,
+.tab-strip .tab.active.playing .tab-header,
+.tab-strip .tab.active[playing] .tab-header,
+.tab.active.audible .tab-background,
+.tab.active[audible] .tab-background,
+.tab.active.playing .tab-background,
+.tab.active[playing] .tab-background {
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent) !important;
+    background-image: none !important;
+    background: color-mix(in srgb, var(--c-glass) 12%, transparent) !important;
+    backdrop-filter: blur(8px) saturate(var(--saturation)) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(var(--saturation)) !important;
+    border-radius: 10px !important;
+    box-shadow: 
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent) !important;
+    border: none !important;
+    overflow: visible !important;
+    transform: none !important;
+    will-change: auto !important;
+    transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1) !important;
+    animation: none !important;
+}
+
+/* Exclude audible tabs from the animation */
+.tab.active.audible .tab-header,
+.tab.active[audible] .tab-header,
+.tab.active.playing .tab-header,
+.tab.active[playing] .tab-header {
+    animation: none !important;
+    transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1) !important;
     /* Remove accent colors */
     --accent-color: transparent !important;
     --accent-rgb: 0, 0, 0 !important;
@@ -275,7 +490,7 @@
     --colorAccentFg: transparent !important;
 }
 
-/* Remove accent colors from ALL active tab elements */
+/* Remove accent colors from ALL active tab elements - NO STROKE ON FAVICON - BLOCK ALL VIVALDI STYLES */
 .tab.active .tab-position,
 .tab.active .tab-position *,
 .tab.active .tab-icon,
@@ -290,9 +505,73 @@
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
+    stroke: none !important;
+    stroke-width: 0 !important;
+    /* Block all Vivaldi color variables */
     --accent-color: transparent !important;
     --accent-rgb: 0, 0, 0 !important;
     --accent: transparent !important;
+    --colorAccentBg: transparent !important;
+    --colorAccentFg: transparent !important;
+    --colorAccent: transparent !important;
+    /* Block gradients and patterns */
+    background-image: none !important;
+    -webkit-background-image: none !important;
+    -moz-background-image: none !important;
+    background-size: auto !important;
+    background-repeat: no-repeat !important;
+    background-position: 0 0 !important;
+    /* Block any text decorations that might look like borders */
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-color: transparent !important;
+}
+
+/* Disable animations for audible/playing tabs to prevent glitching - COMPLETE DISABLE - MAXIMUM SPECIFICITY */
+#browser .tab.active.audible,
+#browser .tab.active[audible],
+#browser .tab.active.playing,
+#browser .tab.active[playing],
+#browser .tab.active.audible *,
+#browser .tab.active[audible] *,
+#browser .tab.active.playing *,
+#browser .tab.active[playing] *,
+#browser .tab.active.audible .tab-header,
+#browser .tab.active[audible] .tab-header,
+#browser .tab.active.playing .tab-header,
+#browser .tab.active[playing] .tab-header,
+#browser .tab.active.audible .tab-header *,
+#browser .tab.active[audible] .tab-header *,
+#browser .tab.active.playing .tab-header *,
+#browser .tab.active[playing] .tab-header *,
+.tab-strip .tab.active.audible,
+.tab-strip .tab.active[audible],
+.tab-strip .tab.active.playing,
+.tab-strip .tab.active[playing],
+.tab-strip .tab.active.audible *,
+.tab-strip .tab.active[audible] *,
+.tab-strip .tab.active.playing *,
+.tab-strip .tab.active[playing] * {
+    animation: none !important;
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    /* Disable all transitions including scale to prevent glitching */
+    transition: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    -moz-transform: none !important;
+    -o-transform: none !important;
+    scale: 1 1 !important;
+    will-change: auto !important;
+    /* Override any keyframe animations */
+    animation-name: none !important;
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
 }
 
 /* Active Tab with Audio - Liquid Glass Effect, NO ACCENT */
@@ -324,11 +603,13 @@
         0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent) !important;
     border: none !important;
     overflow: visible !important;
-    transform: translateZ(0) !important;
-    will-change: transform !important;
-    /* NO TRANSITIONS - PREVENT BLINKING */
+    /* NO TRANSITIONS - PREVENT BLINKING - NO TRANSFORMS */
+    transform: none !important;
     transition: none !important;
     animation: none !important;
+    -webkit-animation: none !important;
+    scale: 1 1 !important;
+    will-change: auto !important;
     color: #ffffff !important;
 }
 
@@ -388,7 +669,10 @@
     border-radius: inherit !important;
 }
 
-/* Audio indicator - prevent layout shifts and ensure visibility */
+/* Hide Vivaldi's audio icon completely - just keep the favicon - MAXIMUM AGGRESSIVE */
+.tab .tab-audio,
+.tab .tab-audio-indicator,
+.tab .audio-indicator,
 .tab.active .tab-audio,
 .tab.active .tab-audio-indicator,
 .tab.active .audio-indicator,
@@ -397,20 +681,87 @@
 .tab.active.audible .audio-indicator,
 .tab.active[audible] .tab-audio,
 .tab.active[audible] .tab-audio-indicator,
-.tab.active[audible] .audio-indicator {
-    transform: translateZ(0) !important;
-    transition: opacity 0.2s ease !important;
+.tab.active[audible] .audio-indicator,
+.tab.active.playing .tab-audio,
+.tab.active[playing] .tab-audio,
+.tab .tab-audio *,
+.tab.active .tab-audio *,
+.tab.active.audible .tab-audio *,
+.tab.active[audible] .tab-audio *,
+.tab [class*="audio"],
+.tab.active [class*="audio"],
+.tab.active.audible [class*="audio"],
+.tab.active[audible] [class*="audio"],
+.tab [class*="Audio"],
+.tab.active [class*="Audio"],
+.tab.active.audible [class*="Audio"],
+.tab.active[audible] [class*="Audio"],
+.tab [class*="speaker"],
+.tab.active [class*="speaker"],
+.tab.active.audible [class*="speaker"],
+.tab.active[audible] [class*="speaker"],
+.tab [class*="audio"] *,
+.tab.active [class*="audio"] *,
+.tab.active.audible [class*="audio"] *,
+.tab.active[audible] [class*="audio"] * {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
+    pointer-events: none !important;
+}
+
+/* Don't add any ::after icon - just keep the favicon */
+.tab.active.audible .tab-header::after,
+.tab.active[audible] .tab-header::after,
+.tab.active.playing .tab-header::after,
+.tab.active[playing] .tab-header::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Ensure favicon stays visible when audio is playing - no transformations - PREVENT REPLACEMENT */
+.tab.active.audible .tab-favicon,
+.tab.active[audible] .tab-favicon,
+.tab.active.playing .tab-favicon,
+.tab.active[playing] .tab-favicon,
+.tab.active.audible .tab-icon,
+.tab.active[audible] .tab-icon,
+.tab.active.playing .tab-icon,
+.tab.active[playing] .tab-icon,
+.tab.active.audible .favicon,
+.tab.active[audible] .favicon,
+.tab.active.playing .favicon,
+.tab.active[playing] .favicon,
+.tab.active.audible .tab-header .tab-favicon,
+.tab.active[audible] .tab-header .tab-favicon,
+.tab.active.playing .tab-header .tab-favicon,
+.tab.active[playing] .tab-header .tab-favicon,
+.tab.active.audible .tab-header .tab-icon,
+.tab.active[audible] .tab-header .tab-icon,
+.tab.active.playing .tab-header .tab-icon,
+.tab.active[playing] .tab-header .tab-icon,
+.tab.active.audible .tab-position .tab-favicon,
+.tab.active[audible] .tab-position .tab-favicon,
+.tab.active.playing .tab-position .tab-favicon,
+.tab.active[playing] .tab-position .tab-favicon {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    background: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    /* Keep favicon normal - no transformations */
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    /* Prevent Vivaldi from replacing it */
+    background-image: inherit !important;
+    content: inherit !important;
 }
 
-/* Remove ALL backgrounds from favicon and icon elements - COMPLETE REMOVAL */
+/* Remove ALL backgrounds from favicon and icon elements - COMPLETE REMOVAL - NO STROKE */
 .tab.active .tab-icon,
 .tab.active .tab-favicon,
 .tab.active .favicon,
@@ -444,6 +795,9 @@
     outline: none !important;
     padding: 0 !important;
     margin: 0 !important;
+    stroke: none !important;
+    stroke-width: 0 !important;
+    -webkit-stroke: none !important;
 }
 
 /* Remove backgrounds from ALL parent containers of favicon */
@@ -513,7 +867,7 @@
     box-shadow: none !important;
 }
 
-/* Remove any pseudo-elements that might create circles */
+/* Remove any pseudo-elements that might create circles - NO ANIMATIONS */
 .tab.active .tab-icon::before,
 .tab.active .tab-icon::after,
 .tab.active .tab-favicon::before,
@@ -532,21 +886,30 @@
     border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
+    animation: none !important;
+    -webkit-animation: none !important;
+    transition: none !important;
+    transform: none !important;
 }
 
 /* Remove any circular backgrounds from tab header elements when audio is playing - NUCLEAR OPTION */
 .tab.active.audible .tab-header *,
 .tab.active[audible] .tab-header *,
 .tab.active.audible .tab-header *::before,
-.tab.active.audible .tab-header *::after,
-.tab.active[audible] .tab-header *::before,
-.tab.active[audible] .tab-header *::after {
+/* Don't hide ::after on tab-header itself - we need it for Font Awesome icon */
+.tab.active.audible .tab-header > *::after,
+.tab.active[audible] .tab-header > *::before,
+.tab.active[audible] .tab-header > *::after {
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     border: none !important;
+    animation: none !important;
+    -webkit-animation: none !important;
+    transition: none !important;
+    transform: none !important;
 }
 
 /* Specifically target the first child elements that might have backgrounds */
@@ -629,9 +992,10 @@
     font-weight: 600;
 }
 
-/* Inactive Tab - Liquid Glass Effect (Lighter) */
-.tab:not(.active) .tab-header,
-.tab:not(.active) .tab-header .tab-background {
+/* Inactive Tab - Liquid Glass Effect (Lighter) - Only animate if NOT audible */
+.tab:not(.active):not(.audible):not([audible]):not(.playing):not([playing]) .tab-header,
+.tab:not(.active):not(.audible):not([audible]):not(.playing):not([playing]) .tab-header .tab-background,
+.tab:not(.active):not(.audible):not([audible]):not(.playing):not([playing]) .tab-background {
     background-color: color-mix(in srgb, var(--c-glass) 6%, transparent) !important;
     background-image: none !important;
     background: color-mix(in srgb, var(--c-glass) 6%, transparent) !important;
@@ -647,6 +1011,25 @@
     border: none !important;
     transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1), scale 400ms cubic-bezier(1, 0, 0.4, 1) !important;
     animation: scaleTabInactive 440ms ease !important;
+}
+
+/* Inactive Tab - NO ANIMATION for audible tabs */
+.tab:not(.active).audible .tab-header,
+.tab:not(.active)[audible] .tab-header,
+.tab:not(.active).playing .tab-header,
+.tab:not(.active)[playing] .tab-header,
+.tab:not(.active).audible .tab-header .tab-background,
+.tab:not(.active)[audible] .tab-header .tab-background,
+.tab:not(.active).playing .tab-header .tab-background,
+.tab:not(.active)[playing] .tab-header .tab-background,
+.tab:not(.active).audible .tab-background,
+.tab:not(.active)[audible] .tab-background,
+.tab:not(.active).playing .tab-background,
+.tab:not(.active)[playing] .tab-background {
+    animation: none !important;
+    transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1), box-shadow 400ms cubic-bezier(1, 0, 0.4, 1) !important;
+    transform: none !important;
+    scale: 1 1 !important;
 }
 
 /* Tab Hover - Enhanced Liquid Glass */
@@ -830,7 +1213,7 @@
     -webkit-backdrop-filter: none !important;
 }
 
-/* NUCLEAR: Remove ALL backgrounds from active tab favicon area */
+/* NUCLEAR: Remove ALL backgrounds from active tab favicon area - NO STROKE */
 .tab.active .tab-position,
 .tab.active .tab-icon,
 .tab.active .tab-favicon,
@@ -847,6 +1230,22 @@
     outline: none !important;
     padding: 0 !important;
     margin: 0 !important;
+    stroke: none !important;
+    stroke-width: 0 !important;
+}
+
+/* Remove stroke from ALL favicon/icon elements - COMPREHENSIVE */
+.tab.active *[class*="icon"],
+.tab.active *[class*="Icon"],
+.tab.active *[class*="favicon"],
+.tab.active *[class*="Favicon"],
+.tab.active svg,
+.tab.active svg *,
+.tab.active img {
+    stroke: none !important;
+    stroke-width: 0 !important;
+    border: none !important;
+    outline: none !important;
 }
 
 /* Status Bar */
