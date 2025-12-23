@@ -669,58 +669,12 @@
     border-radius: inherit !important;
 }
 
-/* Hide Vivaldi's audio icon completely - just keep the favicon - MAXIMUM AGGRESSIVE */
-.tab .tab-audio,
-.tab .tab-audio-indicator,
-.tab .audio-indicator,
-.tab.active .tab-audio,
-.tab.active .tab-audio-indicator,
-.tab.active .audio-indicator,
-.tab.active.audible .tab-audio,
-.tab.active.audible .tab-audio-indicator,
-.tab.active.audible .audio-indicator,
-.tab.active[audible] .tab-audio,
-.tab.active[audible] .tab-audio-indicator,
-.tab.active[audible] .audio-indicator,
-.tab.active.playing .tab-audio,
-.tab.active[playing] .tab-audio,
-.tab .tab-audio *,
-.tab.active .tab-audio *,
-.tab.active.audible .tab-audio *,
-.tab.active[audible] .tab-audio *,
-.tab [class*="audio"],
-.tab.active [class*="audio"],
-.tab.active.audible [class*="audio"],
-.tab.active[audible] [class*="audio"],
-.tab [class*="Audio"],
-.tab.active [class*="Audio"],
-.tab.active.audible [class*="Audio"],
-.tab.active[audible] [class*="Audio"],
-.tab [class*="speaker"],
-.tab.active [class*="speaker"],
-.tab.active.audible [class*="speaker"],
-.tab.active[audible] [class*="speaker"],
-.tab [class*="audio"] *,
-.tab.active [class*="audio"] *,
-.tab.active.audible [class*="audio"] *,
-.tab.active[audible] [class*="audio"] * {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    width: 0 !important;
-    height: 0 !important;
-    overflow: hidden !important;
-    position: absolute !important;
-    left: -9999px !important;
-    pointer-events: none !important;
-}
 
 /* Don't add any ::after icon - just keep the favicon */
 .tab.active.audible .tab-header::after,
 .tab.active[audible] .tab-header::after,
 .tab.active.playing .tab-header::after,
 .tab.active[playing] .tab-header::after {
-    display: none !important;
     content: none !important;
 }
 
@@ -899,7 +853,9 @@
 /* Don't hide ::after on tab-header itself - we need it for Font Awesome icon */
 .tab.active.audible .tab-header > *::after,
 .tab.active[audible] .tab-header > *::before,
-.tab.active[audible] .tab-header > *::after {
+.tab.active[audible] .tab-header > *::after,
+.tab.active[audible] .tab-favicon::before,
+.tab.active[audible] .tab-icon::before {
     background: transparent !important;
     background-color: transparent !important;
     background-image: none !important;
@@ -933,6 +889,124 @@
     border-radius: 0 !important;
     background: transparent !important;
     background-color: transparent !important;
+}
+
+/* Audio icon overlay */
+.tab .tab-favicon {
+    position: relative !important;
+}
+.tab .favicon {
+    position: relative !important;
+}
+
+/* Force pseudo-element overlay to be visible even on active audible tabs */
+#browser .tab .tab-audio,
+#browser .tab .audio-indicator,
+#browser .tab .tab-audio-indicator,
+#browser .tab.active .tab-audio,
+#browser .tab.active .audio-indicator,
+#browser .tab.active .tab-audio-indicator,
+#browser .tab.audible .tab-audio,
+#browser .tab.audible .audio-indicator,
+#browser .tab.audible .tab-audio-indicator,
+#browser .tab[audible] .tab-audio,
+#browser .tab[audible] .audio-indicator,
+#browser .tab[audible] .tab-audio-indicator {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: static !important;
+    left: auto !important;
+    width: auto !important;
+    height: auto !important;
+    pointer-events: auto !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+#browser .tab .tab-favicon,
+#browser .tab .favicon,
+#browser .tab .tab-icon,
+#browser .tab .tab-header .tab-favicon,
+#browser .tab .tab-header .favicon,
+#browser .tab .tab-header .tab-icon,
+#browser .tab .tab-position .tab-favicon,
+#browser .tab .tab-position .favicon,
+#browser .tab .tab-position .tab-icon,
+#browser .tab [class*="favicon"],
+#browser .tab [class*="icon"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: visible !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    outline: none !important;
+}
+
+#browser .tab .tab-icon::before,
+#browser .tab .tab-icon::after,
+#browser .tab .tab-favicon::before,
+#browser .tab .tab-favicon::after,
+#browser .tab .favicon::before,
+#browser .tab .favicon::after {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+#browser .tab [style*="border-radius: 50%"],
+#browser .tab [style*="border-radius:50%"] {
+    border-radius: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+#browser .tab .tab-header .tab-audio,
+#browser .tab .tab-header .audio-indicator,
+#browser .tab .tab-header .tab-audio-indicator,
+#browser .tab .tab-audio,
+#browser .tab .audio-indicator,
+#browser .tab .tab-audio-indicator,
+#browser .tab [class*="audio"],
+#browser .tab [class*="Audio"],
+#browser .tab [class*="speaker"] {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: static !important;
+    left: auto !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+/* Audio indicator restored - kept clean */
+#browser .tab [class*="audio"] *,
+#browser .tab [class*="Audio"] *,
+#browser .tab [class*="speaker"] * {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: static !important;
+    left: auto !important;
 }
 
 /* NUCLEAR OPTION: Remove ALL backgrounds from EVERYTHING in audible tabs */

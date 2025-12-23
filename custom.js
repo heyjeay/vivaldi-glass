@@ -37,36 +37,25 @@
                 }
             });
             
-            // Completely hide all audio indicators - force hide them
             const audioIndicators = tab.querySelectorAll('.tab-audio, .tab-audio-indicator, .audio-indicator, [class*="audio"], [class*="Audio"], [class*="speaker"], [class*="Speaker"]');
             audioIndicators.forEach(el => {
-                // Force hide completely
-                el.style.display = 'none';
-                el.style.visibility = 'hidden';
-                el.style.opacity = '0';
-                el.style.width = '0';
-                el.style.height = '0';
-                el.style.overflow = 'hidden';
-                el.style.position = 'absolute';
-                el.style.left = '-9999px';
-                // Remove all background and border styles
+                el.style.display = 'inline-flex';
+                el.style.visibility = 'visible';
+                el.style.opacity = '1';
+                el.style.width = 'auto';
+                el.style.height = 'auto';
+                el.style.overflow = 'visible';
+                el.style.position = 'static';
+                el.style.left = '';
                 el.style.background = 'transparent';
                 el.style.backgroundColor = 'transparent';
                 el.style.backgroundImage = 'none';
                 el.style.border = 'none';
                 el.style.boxShadow = 'none';
                 el.style.outline = 'none';
-                el.style.padding = '0';
-                el.style.margin = '0';
-                el.style.borderRadius = '0';
-                // Also check parent elements
-                let parent = el.parentElement;
-                if (parent && !parent.classList.contains('tab-header')) {
-                    parent.style.background = 'transparent';
-                    parent.style.backgroundColor = 'transparent';
-                    parent.style.border = 'none';
-                    parent.style.boxShadow = 'none';
-                }
+                el.style.padding = '';
+                el.style.margin = '';
+                el.style.borderRadius = '';
             });
             
             // Ensure favicon stays visible
@@ -133,30 +122,42 @@
     function initAutoHideAddressBar() {
         // Wait for the DOM to be ready
         const checkInterval = setInterval(() => {
+            // More specific selector for the main address bar container
             const addressBar = document.querySelector('.toolbar-addressbar');
+            // Fallback if the specific class isn't found (older versions or mods)
+            const addressBarFallback = document.querySelector('.UrlBar')?.closest('.toolbar-addressbar') || document.querySelector('.UrlBar');
+            
+            const targetAddressBar = addressBar || addressBarFallback;
             const header = document.querySelector('#header');
-
-            if (addressBar && header) {
+            
+            if (targetAddressBar) {
                 clearInterval(checkInterval);
+                
+                const finalAddressBar = targetAddressBar;
 
-                // Find all child elements that need to be hidden
-                const urlBar = addressBar.querySelector('.UrlBar');
-                const toolbar = addressBar.querySelector('.toolbar');
-                const allChildren = addressBar.querySelectorAll('*');
-
-                // Store original display value
-                const originalDisplay = addressBar.style.display || window.getComputedStyle(addressBar).display || 'block';
+                // Store original display value - default to flex as it's standard for toolbars
+                const originalDisplay = 'flex';
                 
                 // Get the actual height of the address bar for smooth animation
-                let addressBarHeight = 0;
+                let addressBarHeight = 34; // Default fallback
+                
                 const measureHeight = () => {
-                    addressBar.style.display = originalDisplay;
-                    addressBar.style.visibility = 'hidden';
-                    addressBar.style.maxHeight = 'none';
-                    addressBar.style.transform = 'none';
-                    addressBarHeight = addressBar.offsetHeight;
-                    addressBar.style.visibility = '';
+                    // Clone to measure if needed, or just force a measurement state
+                    const prevDisplay = finalAddressBar.style.display;
+                    const prevVisibility = finalAddressBar.style.visibility;
+                    
+                    finalAddressBar.style.display = originalDisplay;
+                    finalAddressBar.style.visibility = 'hidden';
+                    finalAddressBar.style.maxHeight = 'none';
+                    
+                    const measured = finalAddressBar.offsetHeight;
+                    if (measured > 0) addressBarHeight = measured;
+                    
+                    finalAddressBar.style.display = prevDisplay;
+                    finalAddressBar.style.visibility = prevVisibility;
                 };
+                
+                // Measure initially
                 measureHeight();
                 
                 // Animation duration
@@ -164,167 +165,141 @@
                 
                 // Function to hide address bar with slide-up animation
                 const hideAddressBar = () => {
-                    // Only animate if not already hidden
-                    if (addressBar.classList.contains('addressbar-hidden')) {
-                        return;
-                    }
-                    
-                    // Check if already hidden via display
-                    const computedStyle = window.getComputedStyle(addressBar);
-                    if (computedStyle.display === 'none') {
-                        addressBar.classList.add('addressbar-hidden');
-                        return;
-                    }
-                    
-                    // Mark as hiding to prevent multiple calls
-                    addressBar.classList.add('addressbar-hiding');
-                    
-                    // Ensure element is visible and has proper display
-                    addressBar.style.display = originalDisplay;
-                    addressBar.style.visibility = 'visible';
-                    
-                    // Get current actual height - measure it properly
-                    let heightToUse = addressBar.offsetHeight;
-                    if (heightToUse === 0) {
-                        // If height is 0, temporarily show to measure
-                        addressBar.style.maxHeight = 'none';
-                        addressBar.style.height = 'auto';
-                        heightToUse = addressBar.offsetHeight || addressBarHeight;
-                    }
-                    
-                    // Reset all styles to ensure clean state
-                    addressBar.style.padding = '';
-                    addressBar.style.margin = '';
-                    addressBar.style.background = '';
-                    addressBar.style.backgroundColor = '';
-                    
-                    // Set starting state explicitly
-                    addressBar.style.maxHeight = heightToUse + 'px';
-                    addressBar.style.opacity = '1';
-                    addressBar.style.transform = 'translateY(0) scale(1)';
-                    addressBar.style.pointerEvents = 'auto';
-                    addressBar.style.overflow = 'hidden';
-                    addressBar.style.height = 'auto';
-                    
-                    // Remove transition temporarily to set initial state
-                    addressBar.style.transition = 'none';
-                    
-                    // Force reflow - this is critical for animation to work
-                    void addressBar.offsetHeight;
-                    
-                    // Small delay to ensure initial state is rendered
-                    setTimeout(() => {
-                        // NOW set transitions
-                        addressBar.style.transition = `max-height ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), transform ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+                    try {
+                        // Only animate if not already hidden
+                        if (finalAddressBar.classList.contains('addressbar-hidden')) {
+                            return;
+                        }
                         
-                        // Force another reflow
-                        void addressBar.offsetHeight;
+                        // Mark as hiding to prevent multiple calls
+                        finalAddressBar.classList.add('addressbar-hiding');
                         
-                        // Use requestAnimationFrame to trigger animation
-                        requestAnimationFrame(() => {
-                            // Now trigger the hide animation
-                            addressBar.style.maxHeight = '0';
-                            addressBar.style.opacity = '0';
-                            addressBar.style.transform = 'translateY(-15px) scale(0.98)';
-                            addressBar.style.pointerEvents = 'none';
-                        });
-                    }, 10);
-                    
-                    // After animation completes, set display: none and mark as hidden
-                    setTimeout(() => {
-                        addressBar.classList.remove('addressbar-hiding');
-                        addressBar.classList.add('addressbar-hidden');
-                        addressBar.style.display = 'none';
-                        addressBar.style.visibility = 'hidden';
-                    }, animationDuration + 50);
-                    
-                    // Also hide status bar when address bar hides
-                    if (window.hideStatusBar) {
-                        window.hideStatusBar();
+                        // Ensure element is visible and has proper display before animating out
+                        finalAddressBar.style.display = originalDisplay;
+                        finalAddressBar.style.visibility = 'visible';
+                        
+                        // Get current actual height
+                        let heightToUse = finalAddressBar.offsetHeight;
+                        if (heightToUse === 0) heightToUse = addressBarHeight;
+                        
+                        // Reset all styles to ensure clean state
+                        finalAddressBar.style.padding = '';
+                        finalAddressBar.style.margin = '';
+                        
+                        // Set starting state explicitly
+                        finalAddressBar.style.maxHeight = heightToUse + 'px';
+                        finalAddressBar.style.minHeight = heightToUse + 'px'; // Ensure min-height doesn't block
+                        finalAddressBar.style.opacity = '1';
+                        finalAddressBar.style.transform = 'translateY(0) scale(1)';
+                        finalAddressBar.style.pointerEvents = 'auto';
+                        finalAddressBar.style.overflow = 'hidden';
+                        
+                        // Remove transition temporarily to set initial state
+                        finalAddressBar.style.transition = 'none';
+                        
+                        // Force reflow
+                        void finalAddressBar.offsetHeight;
+                        
+                        // Small delay to ensure initial state is rendered
+                        setTimeout(() => {
+                            // NOW set transitions
+                            finalAddressBar.style.transition = `max-height ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), min-height ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), transform ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+                            
+                            // Force another reflow
+                            void finalAddressBar.offsetHeight;
+                            
+                            // Use requestAnimationFrame to trigger animation
+                            requestAnimationFrame(() => {
+                                // Now trigger the hide animation
+                                finalAddressBar.style.maxHeight = '0';
+                                finalAddressBar.style.minHeight = '0';
+                                finalAddressBar.style.opacity = '0';
+                                finalAddressBar.style.transform = 'translateY(-15px) scale(0.98)';
+                                finalAddressBar.style.pointerEvents = 'none';
+                            });
+                        }, 10);
+                        
+                        // After animation completes, set display: none and mark as hidden
+                        setTimeout(() => {
+                            finalAddressBar.classList.remove('addressbar-hiding');
+                            finalAddressBar.classList.add('addressbar-hidden');
+                        }, animationDuration + 50);
+                        
+                        // Also hide status bar when address bar hides
+                        if (window.hideStatusBar) {
+                            window.hideStatusBar();
+                        }
+                    } catch (e) {
+                        console.error('Error hiding address bar:', e);
                     }
                 };
 
                 // Function to show address bar with slide-down animation
                 const showAddressBar = () => {
-                    // If already visible and not hidden, don't re-animate
-                    if (!addressBar.classList.contains('addressbar-hidden') && 
-                        !addressBar.classList.contains('addressbar-hiding') &&
-                        addressBar.style.display !== 'none' && 
-                        addressBar.style.opacity === '1') {
-                        // Still show status bar if address bar is visible
+                    try {
+                        // If already visible and not hidden, don't re-animate
+                        if (!finalAddressBar.classList.contains('addressbar-hidden') && 
+                            !finalAddressBar.classList.contains('addressbar-hiding') &&
+                            finalAddressBar.style.display !== 'none' && 
+                            finalAddressBar.style.opacity === '1') {
+                            return; // Already visible
+                        }
+                        
+                        // Remove hiding/hidden classes
+                        finalAddressBar.classList.remove('addressbar-hidden', 'addressbar-hiding');
+                        
+                        // First, restore display and set initial hidden state
+                        finalAddressBar.style.display = originalDisplay;
+                        finalAddressBar.style.visibility = 'visible';
+                        finalAddressBar.style.maxHeight = '0';
+                        finalAddressBar.style.minHeight = '0';
+                        finalAddressBar.style.opacity = '0';
+                        finalAddressBar.style.transform = 'translateY(-15px) scale(0.98)';
+                        finalAddressBar.style.pointerEvents = 'none';
+                        finalAddressBar.style.overflow = 'visible'; 
+                        
+                        // Remove transition temporarily
+                        finalAddressBar.style.transition = 'none';
+                        
+                        // Force reflow
+                        void finalAddressBar.offsetHeight;
+                        
+                        // Small delay then set transitions and animate
+                        setTimeout(() => {
+                            finalAddressBar.style.transition = `max-height ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), min-height ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), transform ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+                            void finalAddressBar.offsetHeight;
+                            
+                            // Then animate to visible state
+                            requestAnimationFrame(() => {
+                                finalAddressBar.style.maxHeight = addressBarHeight + 'px';
+                                finalAddressBar.style.minHeight = addressBarHeight + 'px';
+                                finalAddressBar.style.opacity = '1';
+                                finalAddressBar.style.transform = 'translateY(0) scale(1)';
+                                finalAddressBar.style.pointerEvents = 'auto';
+                                finalAddressBar.style.overflow = 'visible'; 
+                            });
+                        }, 10);
+                        
+                        // Also show status bar when address bar shows
                         if (window.showStatusBar) {
                             window.showStatusBar();
                         }
-                        return; // Already visible
-                    }
-                    
-                    // Remove hiding/hidden classes
-                    addressBar.classList.remove('addressbar-hidden', 'addressbar-hiding');
-                    
-                    // First, restore display and set initial hidden state
-                    addressBar.style.display = originalDisplay;
-                    addressBar.style.visibility = 'visible';
-                    addressBar.style.maxHeight = '0';
-                    addressBar.style.opacity = '0';
-                    addressBar.style.transform = 'translateY(-15px) scale(0.98)';
-                    addressBar.style.pointerEvents = 'none';
-                    addressBar.style.overflow = 'visible'; // Changed to visible so dropdowns can show
-                    addressBar.style.padding = '';
-                    addressBar.style.margin = '';
-                    addressBar.style.background = '';
-                    addressBar.style.backgroundColor = '';
-                    
-                    // Remove transition temporarily
-                    addressBar.style.transition = 'none';
-                    
-                    // Force reflow to ensure initial state is applied
-                    void addressBar.offsetHeight;
-                    
-                    // Small delay then set transitions and animate
-                    setTimeout(() => {
-                        addressBar.style.transition = `max-height ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), transform ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-                        void addressBar.offsetHeight;
-                        
-                        // Then animate to visible state
-                        requestAnimationFrame(() => {
-                            addressBar.style.maxHeight = addressBarHeight + 'px';
-                            addressBar.style.opacity = '1';
-                            addressBar.style.transform = 'translateY(0) scale(1)';
-                            addressBar.style.pointerEvents = 'auto';
-                            addressBar.style.overflow = 'visible'; // Keep overflow visible for dropdowns
-                        });
-                    }, 10);
-                    
-                    // Also show status bar when address bar shows
-                    if (window.showStatusBar) {
-                        window.showStatusBar();
+                    } catch (e) {
+                        console.error('Error showing address bar:', e);
                     }
                 };
 
                 // Set smooth transitions for animation (default, will be overridden in show/hide functions)
-                addressBar.style.transition = `max-height ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), transform ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), scale ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-
-                // Function to focus the address bar
-                const focusAddressBar = () => {
-                    // Try multiple selectors to find the URL input
-                    const urlInput = addressBar.querySelector('input[type="text"], input[type="url"], .UrlBar input, .addressfield input, #addressfield input');
-                    if (urlInput) {
-                        // Small delay to ensure address bar is visible first
-                        setTimeout(() => {
-                            urlInput.focus();
-                            urlInput.select(); // Select any existing text
-                        }, 100);
-                    }
-                };
+                finalAddressBar.style.transition = `max-height ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), min-height ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1), transform ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
 
                 // Initially hide the address bar
                 hideAddressBar();
 
                 let hideTimeout;
                 let showTimestamp = 0;
-                const minShowDuration = 10000; // 10 seconds in milliseconds
+                const minShowDuration = 2000; // Reduced to 2 seconds for better UX
 
-                // Function to check if we can hide (10 seconds must have passed since showing)
+                // Function to check if we can hide
                 const canHide = () => {
                     const timeSinceShow = Date.now() - showTimestamp;
                     return timeSinceShow >= minShowDuration;
@@ -333,103 +308,116 @@
                 // Function to check if address bar or any input is focused
                 const isAddressBarFocused = () => {
                     const activeElement = document.activeElement;
-                    if (!activeElement) return false;
+                    if (!activeElement || activeElement === document.body) return false;
                     
                     // Check if URL bar is focused
-                    if (urlBar && (activeElement === urlBar || 
-                        (urlBar.contains && urlBar.contains(activeElement)))) {
-                        return true;
-                    }
-                    
-                    // Check if any input in address bar is focused
-                    const addressBarInputs = addressBar.querySelectorAll('input, textarea');
-                    for (let input of addressBarInputs) {
-                        if (activeElement === input || input.contains(activeElement)) {
+                    if (finalAddressBar.contains(activeElement)) {
+                        // Only care about inputs, not just any click
+                        if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA' || activeElement.contentEditable === 'true') {
                             return true;
                         }
-                    }
-                    
-                    // Check if active element is within address bar
-                    if (activeElement.closest && activeElement.closest('.toolbar-addressbar')) {
-                        return true;
                     }
                     
                     return false;
                 };
 
-                // Function to attempt hiding (only if 10 seconds have passed and not focused)
+                // Function to attempt hiding (immediate if not focused, otherwise wait)
                 const attemptHide = () => {
                     // Don't hide if address bar is focused
                     if (isAddressBarFocused()) {
                         return;
                     }
                     
-                    if (canHide()) {
-                        hideAddressBar();
-                    } else {
-                        // Schedule another attempt after remaining time
-                        const remainingTime = minShowDuration - (Date.now() - showTimestamp);
-                        if (remainingTime > 0) {
-                            hideTimeout = setTimeout(() => {
-                                attemptHide();
-                            }, remainingTime);
-                        }
-                    }
+                    hideAddressBar();
                 };
 
-                // Periodic check to hide address bar after 10 seconds (every second)
+                // Periodic check to hide address bar (safety fallback)
                 setInterval(() => {
-                    // Only check if address bar is currently visible
-                    const isVisible = !addressBar.classList.contains('addressbar-hidden') && 
-                                     addressBar.style.display !== 'none' &&
-                                     addressBar.style.opacity !== '0';
-                    
-                    if (isVisible && canHide() && !isAddressBarFocused()) {
-                        hideAddressBar();
+                    const isHidden = finalAddressBar.classList.contains('addressbar-hidden');
+                    if (!isHidden && canHide() && !isAddressBarFocused()) {
+                        // Also check mouse position to be safe
+                        const hoverState = finalAddressBar.matches(':hover') || (header && header.matches(':hover'));
+                        if (!hoverState) {
+                            hideAddressBar();
+                        }
                     }
-                }, 1000); // Check every second
+                }, 2000); 
 
                 // Show address bar on header hover
-                header.addEventListener('mouseenter', () => {
-                    clearTimeout(hideTimeout);
-                    showTimestamp = Date.now();
-                    showAddressBar();
-                });
-
-                // Hide address bar when mouse leaves (only after 10 seconds)
-                header.addEventListener('mouseleave', () => {
-                    clearTimeout(hideTimeout);
-                    hideTimeout = setTimeout(() => {
-                        attemptHide();
-                    }, 300);
-                });
-
-                // Keep visible when hovering over address bar itself
-                addressBar.addEventListener('mouseenter', () => {
-                    clearTimeout(hideTimeout);
-                    showTimestamp = Date.now();
-                    showAddressBar();
-                });
-
-                addressBar.addEventListener('mouseleave', () => {
-                    clearTimeout(hideTimeout);
-                    hideTimeout = setTimeout(() => {
-                        attemptHide();
-                    }, 300);
-                });
-
-                // Keep address bar visible when it's focused (user is typing/searching)
-                // urlBar is already declared above, reuse it
-                if (urlBar) {
-                    // Show when URL bar gets focus
-                    urlBar.addEventListener('focus', () => {
+                if (header) {
+                    header.addEventListener('mouseenter', () => {
                         clearTimeout(hideTimeout);
                         showTimestamp = Date.now();
                         showAddressBar();
-                    }, true);
+                    });
+                    
+                    header.addEventListener('mouseleave', () => {
+                        clearTimeout(hideTimeout);
+                        hideTimeout = setTimeout(() => {
+                            // Verify mouse isn't over address bar
+                            if (!finalAddressBar.matches(':hover')) {
+                                attemptHide();
+                            }
+                        }, 300);
+                    });
+                }
+                
+                // Mouse move handler for top edge detection
+                let topEdgeHideTimeout;
+                document.addEventListener('mousemove', (e) => {
+                    const topThreshold = Math.max(10, Math.floor(window.innerHeight * 0.02)); // Smaller threshold (10-20px)
+                    
+                    if (e.clientY <= topThreshold) {
+                        clearTimeout(topEdgeHideTimeout);
+                        showTimestamp = Date.now();
+                        showAddressBar();
+                    } else {
+                        // If we move away from top edge, attempt hide
+                        clearTimeout(topEdgeHideTimeout);
+                        
+                        // Only schedule hide if we're well below the threshold
+                        if (e.clientY > topThreshold + 50) {
+                            topEdgeHideTimeout = setTimeout(() => {
+                                const isHovering = finalAddressBar.matches(':hover') || (header && header.matches(':hover'));
+                                if (!isHovering) {
+                                    attemptHide();
+                                }
+                            }, 500); 
+                        }
+                    }
+                }, true);
 
-                    // Keep visible while typing
-                    urlBar.addEventListener('input', () => {
+                // Keep visible when hovering over address bar itself
+                finalAddressBar.addEventListener('mouseenter', () => {
+                    clearTimeout(hideTimeout);
+                    showTimestamp = Date.now();
+                    showAddressBar();
+                });
+
+                finalAddressBar.addEventListener('mouseleave', () => {
+                    clearTimeout(hideTimeout);
+                    hideTimeout = setTimeout(() => {
+                        attemptHide();
+                    }, 300);
+                });
+
+                // Focus handling
+                finalAddressBar.addEventListener('focusin', () => {
+                    clearTimeout(hideTimeout);
+                    showTimestamp = Date.now();
+                    showAddressBar();
+                });
+                
+                finalAddressBar.addEventListener('focusout', () => {
+                    setTimeout(() => {
+                         if (!isAddressBarFocused() && !finalAddressBar.matches(':hover')) {
+                            attemptHide();
+                        }
+                    }, 200);
+                });
+            }
+        }, 100);
+    }
                         clearTimeout(hideTimeout);
                         showTimestamp = Date.now();
                         showAddressBar();
@@ -592,14 +580,13 @@
             }
         }, 100);
 
-        // Stop checking after 10 seconds
-        setTimeout(() => clearInterval(checkInterval), 10000);
+        // Keep checking until elements are found
     }
 
     function initAutoHideStatusBar() {
         // Wait for the DOM to be ready
         const checkInterval = setInterval(() => {
-            const statusBar = document.querySelector('#footer');
+            const statusBar = document.querySelector('#footer, .statusbar, .toolbar-statusbar');
 
             if (statusBar) {
                 clearInterval(checkInterval);
@@ -758,12 +745,25 @@
                 window.showStatusBar = showStatusBar;
                 window.hideStatusBar = hideStatusBar;
 
+                let statusHideTimeout;
+                document.addEventListener('mousemove', (e) => {
+                    const threshold = Math.max(30, Math.floor(window.innerHeight * 0.04));
+                    if (window.innerHeight - e.clientY <= threshold) {
+                        clearTimeout(statusHideTimeout);
+                        showStatusBar();
+                    } else {
+                        clearTimeout(statusHideTimeout);
+                        statusHideTimeout = setTimeout(() => {
+                            hideStatusBar();
+                        }, 300);
+                    }
+                }, true);
+
                 console.log('✓ Status bar initialized - connected to address bar');
             }
         }, 100);
 
-        // Stop checking after 10 seconds
-        setTimeout(() => clearInterval(checkInterval), 10000);
+        // Keep checking until elements are found
     }
 
     // Function to disable animations on audible tabs
@@ -849,6 +849,65 @@
         console.log('✓ Audible tab animation disable initialized');
     }
 
+    // Add resilient classes for audible/muted states to drive our overlay CSS
+    function updateAudibleClasses() {
+        document.querySelectorAll('.tab').forEach(tab => {
+            const hasIndicator = !!tab.querySelector('.tab-audio, .tab-audio-indicator, .audio-indicator, [class*="audio"], [class*="Audio"], [class*="speaker"], [class*="Speaker"]');
+            const isAudible = tab.matches('.audible, [audible], .playing, [playing]') || hasIndicator;
+            const isMuted = tab.matches('.muted, [muted]');
+            if (isAudible) {
+                tab.classList.add('is-audible');
+            } else {
+                tab.classList.remove('is-audible');
+            }
+            if (isMuted) {
+                tab.classList.add('is-muted');
+            } else {
+                tab.classList.remove('is-muted');
+            }
+        });
+    }
+
+    function initAudibleClassOverlay() {
+        // Run immediately
+        updateAudibleClasses();
+        // Observe the tab strip for changes
+        const tabStrip = document.querySelector('.tab-strip');
+        const observer = new MutationObserver(() => {
+            updateAudibleClasses();
+            updateAudioBadges();
+        });
+        if (tabStrip) {
+            observer.observe(tabStrip, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+                attributeFilter: ['class', 'style', 'audible', 'muted', 'playing']
+            });
+        }
+        // Also poll as a fallback
+        setInterval(() => {
+            updateAudibleClasses();
+        }, 200);
+        console.log('✓ Audible class overlay initialized');
+    }
+
+    // Debug: dump tab classes and favicon structure
+    function vivaldiGlassDebugDump() {
+        const dump = Array.from(document.querySelectorAll('.tab')).map(t => {
+            const attrs = {};
+            Array.from(t.attributes).forEach(a => { attrs[a.name] = a.value; });
+            return {
+                title: t.querySelector('.title, .tab-title')?.textContent?.trim() || '',
+                classes: t.className,
+                attrs
+            };
+        });
+        console.log('VivaldiGlass Dump:', dump);
+        return dump;
+    }
+    window.vivaldiGlassDebugDump = vivaldiGlassDebugDump;
+
     // Initialize when page loads
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
@@ -856,11 +915,13 @@
             initAutoHideStatusBar();
             initFaviconAccentRemoval();
             initDisableAudibleAnimations();
+            initAudibleClassOverlay();
         });
     } else {
         initAutoHideAddressBar();
         initAutoHideStatusBar();
         initFaviconAccentRemoval();
         initDisableAudibleAnimations();
+        initAudibleClassOverlay();
     }
 })();
